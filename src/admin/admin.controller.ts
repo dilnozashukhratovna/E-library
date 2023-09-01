@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -22,6 +23,8 @@ import { CookieGetter } from '../decorators/cookieGetter.decorator';
 import { CreatorGuard } from '../guards/creator.guard';
 import { AdminGuard } from '../guards/admin.guard';
 import { AdminSelfGuard } from '../guards/admin.self.guard';
+import { ChangeAdminPasswordDto } from './dto/change-admin-password.dto';
+import { UpdateAdminRolesDto } from './dto/update-admin-roles.dto';
 
 @ApiTags('Admin')
 @Controller('admin')
@@ -62,6 +65,53 @@ export class AdminController {
     return this.adminService.updateAdmin(+id, updateAdminDto);
   }
 
+  @ApiOperation({ summary: 'Change admin password' })
+  @Put(':id/change-password')
+  @UseGuards(AdminSelfGuard)
+  @UseGuards(AdminGuard)
+  async changePassword(
+    @Param('id') id: number,
+    @Body() changeAdminPasswordDto: ChangeAdminPasswordDto,
+  ) {
+    const { oldPassword, newPassword } = changeAdminPasswordDto;
+
+    const updatedAdmin = await this.adminService.changePassword(
+      id,
+      oldPassword,
+      newPassword,
+    );
+
+    if (!updatedAdmin) {
+      return { message: 'Password change failed.' };
+    }
+
+    return { message: 'Password changed successfully.' };
+  }
+
+  @ApiOperation({ summary: 'Change admin roles' })
+  @UseGuards(CreatorGuard)
+  @Put(':id/roles')
+  async changeAdminRoles(
+    @Param('id') id: number,
+    @Body() updateAdminRolesDto: UpdateAdminRolesDto,
+  ) {
+    try {
+      const updatedAdmin = await this.adminService.updateAdminRoles(
+        id,
+        updateAdminRolesDto,
+      );
+      return {
+        message: 'Admin roles updated successfully.',
+        admin: updatedAdmin,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return { message: error.message };
+      }
+      throw error;
+    }
+  }
+
   // ================= AUTH ==================================================
 
   @ApiOperation({ summary: 'Signup Admin' })
@@ -85,7 +135,7 @@ export class AdminController {
     return this.adminService.login(loginAdminDto, res);
   }
 
-  @ApiOperation({ summary: 'logout Admin' })
+  @ApiOperation({ summary: 'Logout Admin' })
   @UseGuards(AdminGuard)
   @ApiResponse({ status: 200, type: Admin })
   @HttpCode(HttpStatus.OK)
@@ -104,6 +154,7 @@ export class AdminController {
     return this.adminService.activate(link);
   }
 
+  @ApiOperation({ summary: 'Refresh admin token' })
   @UseGuards(AdminSelfGuard)
   @UseGuards(AdminGuard)
   @Post(':id/refresh')

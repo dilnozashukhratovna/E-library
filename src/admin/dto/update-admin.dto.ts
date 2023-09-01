@@ -32,13 +32,6 @@ export class UpdateAdminDto {
   @IsEmail()
   email?: string;
 
-  @ApiProperty({ example: 'Pa$$w0rdd', description: 'Admin password' })
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  @IsStrongPassword()
-  password?: string;
-
   @ApiProperty({ example: '+998998887755', description: 'Admin phone number' })
   @IsOptional()
   @IsNotEmpty()
@@ -49,12 +42,4 @@ export class UpdateAdminDto {
   @IsOptional()
   @IsNotEmpty()
   birthdate?: Date;
-
-  @ApiProperty({ example: 'false', description: 'Is admin creator' })
-  @IsOptional()
-  is_creator?: boolean;
-
-  @ApiProperty({ example: 'false', description: 'Is admin active' })
-  @IsOptional()
-  is_active?: boolean;
 }

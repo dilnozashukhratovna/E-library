@@ -19,6 +19,7 @@ export class CreateAdminDto {
   last_name: string;
 
   @ApiProperty({ example: 'img/photo1.jpg', description: 'Admin photo' })
+  @IsString()
   admin_photo: string;
 
   @ApiProperty({ example: 'john01@gmail.com', description: 'Admin email' })

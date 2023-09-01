@@ -8,22 +8,22 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 
-interface AdminAttr {
+interface UserAttr {
   first_name: string;
   last_name: string;
-  admin_photo: string;
+  gender: string;
+  user_photo: string;
+  short_bio: string;
   email: string;
   password: string;
-  phone_number: string;
   birthdate: Date;
-  is_creator: boolean;
   is_active: boolean;
   hashed_refresh_roken: string;
   activation_link: string;
 }
 
-@Table({ tableName: 'admin' })
-export class Admin extends Model<Admin, AdminAttr> {
+@Table({ tableName: 'user' })
+export class User extends Model<User, UserAttr> {
   @ApiProperty({ example: 1, description: 'Unikal Id' })
   @Column({
     type: DataType.INTEGER,
@@ -32,27 +32,40 @@ export class Admin extends Model<Admin, AdminAttr> {
   })
   id: number;
 
-  @ApiProperty({ example: 'John', description: 'Admin first name' })
+  @ApiProperty({ example: 'John', description: 'User first name' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   first_name: string;
 
-  @ApiProperty({ example: 'Green', description: 'Admin last name' })
+  @ApiProperty({ example: 'Green', description: 'User last name' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   last_name: string;
 
-  @ApiProperty({ example: 'img/photo1.jpg', description: 'Admin photo' })
+  @ApiProperty({ example: "male", description: 'User gender' })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  gender: string;
+
+  @ApiProperty({ example: 'img/photo1.jpg', description: 'User photo' })
   @Column({
     type: DataType.STRING,
   })
-  admin_photo: string;
+  user_photo: string;
 
-  @ApiProperty({ example: 'john01@gmail.com', description: 'Admin email' })
+  @ApiProperty({ example: 'Just booklover boy', description: 'User bio' })
+  @Column({
+    type: DataType.STRING,
+  })
+  short_bio: string;
+
+  @ApiProperty({ example: 'john01@gmail.com', description: 'User email' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -60,35 +73,28 @@ export class Admin extends Model<Admin, AdminAttr> {
   })
   email: string;
 
-  @ApiProperty({ example: 'Uzbek1$t0n', description: 'Admin password' })
+  @ApiProperty({ example: 'Uzbek1$t0n', description: 'User password' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   password: string;
 
-  @ApiProperty({ example: '+998998887766', description: 'Admin phone number' })
+  @ApiProperty({ example: '+998998887766', description: 'User phone number' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   phone_number: string;
 
-  @ApiProperty({ example: '2000-12-12', description: 'Admin birth date' })
+  @ApiProperty({ example: '2000-12-12', description: 'User birth date' })
   @Column({
     type: DataType.DATE,
     allowNull: false,
   })
   birthdate: Date;
 
-  @ApiProperty({ example: 'false', description: 'Is admin creator' })
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-  })
-  is_creator: boolean;
-
-  @ApiProperty({ example: 'false', description: 'Is admin active' })
+  @ApiProperty({ example: 'false', description: 'Is user active' })
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
