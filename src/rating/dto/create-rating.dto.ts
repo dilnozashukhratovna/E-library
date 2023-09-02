@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsNotEmpty, Max, IsDecimal } from 'class-validator';
+import { IsString, IsInt, IsNotEmpty, Max, IsDecimal, isNumber, IsNumber } from 'class-validator';
 
 export class CreateRatingDto {
   @ApiProperty({ example: 1, description: 'Book id' })
@@ -14,7 +14,7 @@ export class CreateRatingDto {
 
   @ApiProperty({ example: 4.9, description: 'Rating value' })
   @IsNotEmpty()
-  @IsDecimal()
+  @IsNumber()
   @Max(5.0)
   rating_value: number;
 

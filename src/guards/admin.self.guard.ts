@@ -11,9 +11,9 @@ export class AdminSelfGuard implements CanActivate {
     // console.log(req);
     if (String(req.admin.id) !== req.params.id) {
       throw new ForbiddenException({
-        message: 'Incorrect user!',
+        message: 'Incorrect admin!',
       });
-    }
+    } 
     return true;
   }
 }

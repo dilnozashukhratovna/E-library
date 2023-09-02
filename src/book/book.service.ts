@@ -46,12 +46,31 @@ export class BookService {
   }
 
   async updateBook(id: number, updateBookDto: UpdateBookDto) {
-    const existingBook = await this.bookRepo.findByPk(id);
+    const allowedProperties = [
+      'genre_id',
+      'min_age',
+      'popular_age',
+      'popular_gender',
+      'category_id',
+      'is_paid',
+      'about',
+    ];
 
-    if (!existingBook) {
-      throw new NotFoundException(`Book with id ${id} not found.`);
+    const invalidProperties = Object.keys(updateBookDto).filter(
+      (property) => !allowedProperties.includes(property),
+    );
+
+    if (invalidProperties.length > 0) {
+      const invalidPropsList = invalidProperties.join(', ');
+      const allowedPropsList = allowedProperties.join(', ');
+      const errorMessage = `Invalid change: ${invalidPropsList}.\
+ Only the following properties are allowed to be updated:\
+ ${allowedPropsList}.`;
+
+      throw new BadRequestException(errorMessage);
     }
-    const [affectedRows, [updatedBook]] = await this.bookRepo.update(
+
+    const [numAffectedRows, updatedBooks] = await this.bookRepo.update(
       updateBookDto,
       {
         where: { id },
@@ -59,10 +78,12 @@ export class BookService {
       },
     );
 
-    if (affectedRows === 0 || !updatedBook) {
-      throw new Error(`Update operation failed for book with id ${id}.`);
+    if (numAffectedRows === 0) {
+      throw new BadRequestException(
+        `Book with ID ${id} was not found or no changes were made.`,
+      );
     }
 
-    return updatedBook;
+    return updatedBooks[0].dataValues;
   }
 }

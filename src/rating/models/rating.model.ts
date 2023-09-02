@@ -62,12 +62,6 @@ export class Rating extends Model<Rating, RatingAttr> {
   })
   comment: string;
 
-  @ApiProperty({ example: '2023-12-12', description: 'Commented date' })
-  @Column({
-    type: DataType.DATE,
-  })
-  comment_date: Date;
-
   //========== Relationships ================================
   @BelongsTo(() => Book)
   book: Book;

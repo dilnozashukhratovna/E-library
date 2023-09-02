@@ -97,7 +97,7 @@ export class AdminService {
     if (invalidProperties.length > 0) {
       const invalidPropsList = invalidProperties.join(', ');
       const allowedPropsList = allowedProperties.join(', ');
-      const errorMessage = `Invalid info: ${invalidPropsList}.\
+      const errorMessage = `Invalid change: ${invalidPropsList}.\
  Only the following properties are allowed to be updated:\
  ${allowedPropsList}.`;
 

@@ -32,7 +32,6 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiOperation({ summary: 'Get all users' })
-  @UseGuards(AdminGuard)
   @Get('all')
   async getAllUser() {
     return this.userService.getAllUser();

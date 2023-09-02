@@ -46,12 +46,23 @@ export class RatingService {
   }
 
   async updateRating(id: number, updateRatingDto: UpdateRatingDto) {
-    const existingRating = await this.ratingRepo.findByPk(id);
+    const allowedProperties = ['rating_value', 'comment'];
 
-    if (!existingRating) {
-      throw new NotFoundException(`Rating with id ${id} not found.`);
+    const invalidProperties = Object.keys(updateRatingDto).filter(
+      (property) => !allowedProperties.includes(property),
+    );
+
+    if (invalidProperties.length > 0) {
+      const invalidPropsList = invalidProperties.join(', ');
+      const allowedPropsList = allowedProperties.join(', ');
+      const errorMessage = `Invalid change: ${invalidPropsList}.\
+ Only the following properties are allowed to be updated:\
+ ${allowedPropsList}.`;
+
+      throw new BadRequestException(errorMessage);
     }
-    const [affectedRows, [updatedRating]] = await this.ratingRepo.update(
+
+    const [numAffectedRows, updatedRatings] = await this.ratingRepo.update(
       updateRatingDto,
       {
         where: { id },
@@ -59,10 +70,12 @@ export class RatingService {
       },
     );
 
-    if (affectedRows === 0 || !updatedRating) {
-      throw new Error(`Update operation failed for rating with id ${id}.`);
+    if (numAffectedRows === 0) {
+      throw new BadRequestException(
+        `Rating with ID ${id} was not found or no changes were made.`,
+      );
     }
 
-    return updatedRating;
+    return updatedRatings[0].dataValues;
   }
 }
