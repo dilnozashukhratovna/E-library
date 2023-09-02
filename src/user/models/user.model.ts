@@ -9,6 +9,9 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { Rating } from '../../rating/models/rating.model';
+import { UserCard } from '../../user_card/models/user_card.model';
+import { UserPreferences } from '../../user_preferences/models/user_preferences.model';
+import { UserBooksInfo } from '../../user_books_info/models/user_books_info.model';
 
 interface UserAttr {
   first_name: string;
@@ -117,4 +120,13 @@ export class User extends Model<User, UserAttr> {
 
   @HasMany(() => Rating)
   ratings: Rating[];
+
+  @HasMany(() => UserCard)
+  user_cards: UserCard[];
+
+  @HasMany(() => UserPreferences)
+  user_preferences: UserPreferences[];
+
+  @HasMany(() => UserBooksInfo)
+  userBooksInfos: UserBooksInfo[];
 }

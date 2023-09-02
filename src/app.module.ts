@@ -16,6 +16,18 @@ import { Rating } from './rating/models/rating.model';
 import { RatingModule } from './rating/rating.module';
 import { Author } from './author/models/author.model';
 import { AuthorModule } from './author/author.module';
+import { BookAuthor } from './book_author/models/book_author.model';
+import { BookAuthorModule } from './book_author/book_author.module';
+import { BookLanguage } from './book_language/models/book_language.model';
+import { BookLanguageModule } from './book_language/book_language.module';
+import { Language } from './language/models/language.model';
+import { LanguageModule } from './language/language.module';
+import { UserCard } from './user_card/models/user_card.model';
+import { UserCardModule } from './user_card/user_card.module';
+import { UserPreferences } from './user_preferences/models/user_preferences.model';
+import { UserPreferencesModule } from './user_preferences/user_preferences.module';
+import { UserBooksInfo } from './user_books_info/models/user_books_info.model';
+import { UserBooksInfoModule } from './user_books_info/user_books_info.module';
 
 @Module({
   imports: [
@@ -27,7 +39,21 @@ import { AuthorModule } from './author/author.module';
       username: process.env.POSTGRES_USER,
       password: String(process.env.POSTGRES_PASSWORD),
       database: process.env.POSTGRES_DB,
-      models: [Admin, User, Book, Genre, Category, Rating, Author],
+      models: [
+        Admin,
+        User,
+        Book,
+        Genre,
+        Category,
+        Rating,
+        Author,
+        BookAuthor,
+        BookLanguage,
+        Language,
+        UserCard,
+        UserPreferences,
+        UserBooksInfo,
+      ],
       autoLoadModels: true,
       logging: false,
     }),
@@ -39,6 +65,12 @@ import { AuthorModule } from './author/author.module';
     CategoryModule,
     RatingModule,
     AuthorModule,
+    BookAuthorModule,
+    BookLanguageModule,
+    LanguageModule,
+    UserCardModule,
+    UserPreferencesModule,
+    UserBooksInfoModule,
   ],
   controllers: [],
   providers: [],

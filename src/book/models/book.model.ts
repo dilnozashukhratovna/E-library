@@ -6,12 +6,18 @@ import {
   ForeignKey,
   BelongsTo,
   HasMany,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { Admin } from '../../admin/models/admin.model';
 import { Genre } from '../../genre/models/genre.model';
 import { Category } from '../../category/models/category.model';
 import { Rating } from '../../rating/models/rating.model';
+import { Author } from '../../author/models/author.model';
+import { BookAuthor } from '../../book_author/models/book_author.model';
+import { Language } from '../../language/models/language.model';
+import { BookLanguage } from '../../book_language/models/book_language.model';
+import { UserBooksInfo } from '../../user_books_info/models/user_books_info.model';
 
 interface BookAttr {
   name: string;
@@ -131,4 +137,13 @@ export class Book extends Model<Book, BookAttr> {
 
   @HasMany(() => Rating)
   ratings: Rating[];
+
+  @BelongsToMany(() => Author, () => BookAuthor)
+  authors: Author[];
+
+  @BelongsToMany(() => Language, () => BookLanguage)
+  languages: Language[];
+
+  @HasMany(() => UserBooksInfo)
+  userBooksInfos: UserBooksInfo[];
 }

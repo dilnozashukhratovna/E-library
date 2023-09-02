@@ -6,8 +6,11 @@ import {
   ForeignKey,
   BelongsTo,
   HasMany,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Book } from '../../book/models/book.model';
+import { BookAuthor } from '../../book_author/models/book_author.model';
 
 interface AuthorAttr {
   full_name: string;
@@ -43,4 +46,6 @@ export class Author extends Model<Author, AuthorAttr> {
   about: string;
 
   //========== Relationships ================================
+  @BelongsToMany(() => Book, () => BookAuthor)
+  books: Book[];
 }
