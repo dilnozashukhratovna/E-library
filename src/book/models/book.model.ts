@@ -18,6 +18,7 @@ import { BookAuthor } from '../../book_author/models/book_author.model';
 import { Language } from '../../language/models/language.model';
 import { BookLanguage } from '../../book_language/models/book_language.model';
 import { UserBooksInfo } from '../../user_books_info/models/user_books_info.model';
+import { Payment } from '../../payment/models/payment.model';
 
 interface BookAttr {
   name: string;
@@ -146,4 +147,7 @@ export class Book extends Model<Book, BookAttr> {
 
   @HasMany(() => UserBooksInfo)
   userBooksInfos: UserBooksInfo[];
+
+  @HasMany(() => Payment)
+  payments: Payment[];
 }

@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../user/models/user.model';
+import { Payment } from '../../payment/models/payment.model';
 
 interface UserCardAttr {
   user_id: number;
@@ -75,4 +76,7 @@ export class UserCard extends Model<UserCard, UserCardAttr> {
   //========== Relationships ================================
   @BelongsTo(() => User)
   user: User;
+
+  @HasMany(() => Payment)
+  payments: Payment[];
 }

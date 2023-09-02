@@ -28,6 +28,8 @@ import { UserPreferences } from './user_preferences/models/user_preferences.mode
 import { UserPreferencesModule } from './user_preferences/user_preferences.module';
 import { UserBooksInfo } from './user_books_info/models/user_books_info.model';
 import { UserBooksInfoModule } from './user_books_info/user_books_info.module';
+import { Payment } from './payment/models/payment.model';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -53,6 +55,7 @@ import { UserBooksInfoModule } from './user_books_info/user_books_info.module';
         UserCard,
         UserPreferences,
         UserBooksInfo,
+        Payment,
       ],
       autoLoadModels: true,
       logging: false,
@@ -71,6 +74,7 @@ import { UserBooksInfoModule } from './user_books_info/user_books_info.module';
     UserCardModule,
     UserPreferencesModule,
     UserBooksInfoModule,
+    PaymentModule,
   ],
   controllers: [],
   providers: [],
