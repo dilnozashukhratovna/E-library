@@ -8,13 +8,11 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '../../user/models/user.model';
-import { Book } from '../../book/models/book.model';
 import { UserCard } from '../../user_card/models/user_card.model';
+import { Cart } from '../../cart/models/cart.model';
 
 interface PaymentAttr {
-  user_id: number;
-  book_id: number;
+  cart_id: number
   payment_date: Date;
   amount: number;
   user_card_id: number;
@@ -31,22 +29,13 @@ export class Payment extends Model<Payment, PaymentAttr> {
   })
   id: number;
 
-  @ForeignKey(() => User)
-  @ApiProperty({ example: 1, description: 'User id' })
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    unique: true,
-  })
-  user_id: number;
-
-  @ForeignKey(() => Book)
-  @ApiProperty({ example: 1, description: 'Book id' })
+  @ForeignKey(() => Cart)
+  @ApiProperty({ example: 1, description: 'Cart id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  book_id: number;
+  cart_id: number;
 
   @ApiProperty({ example: '2023-12-12', description: 'Payment date' })
   @Column({
@@ -79,12 +68,9 @@ export class Payment extends Model<Payment, PaymentAttr> {
   status: string;
 
   //========== Relationships ================================
-  @BelongsTo(() => User)
-  user: User;
-
-  @BelongsTo(() => Book)
-  book: Book;
-
   @BelongsTo(() => UserCard)
   userCard: UserCard;
+
+  @BelongsTo(() => Cart)
+  cart: Cart;
 }

@@ -12,7 +12,7 @@ import { Rating } from '../../rating/models/rating.model';
 import { UserCard } from '../../user_card/models/user_card.model';
 import { UserPreferences } from '../../user_preferences/models/user_preferences.model';
 import { UserBooksInfo } from '../../user_books_info/models/user_books_info.model';
-import { Payment } from '../../payment/models/payment.model';
+import { Cart } from '../../cart/models/cart.model';
 
 interface UserAttr {
   first_name: string;
@@ -131,6 +131,6 @@ export class User extends Model<User, UserAttr> {
   @HasMany(() => UserBooksInfo)
   userBooksInfos: UserBooksInfo[];
 
-  @HasMany(() => Payment)
-  payments: Payment[];
+  @HasMany(() => Cart)
+  carts: Cart[];
 }
