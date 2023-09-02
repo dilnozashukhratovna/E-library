@@ -14,6 +14,8 @@ import { Category } from './category/models/category.model';
 import { CategoryModule } from './category/category.module';
 import { Rating } from './rating/models/rating.model';
 import { RatingModule } from './rating/rating.module';
+import { Author } from './author/models/author.model';
+import { AuthorModule } from './author/author.module';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { RatingModule } from './rating/rating.module';
       username: process.env.POSTGRES_USER,
       password: String(process.env.POSTGRES_PASSWORD),
       database: process.env.POSTGRES_DB,
-      models: [Admin, User, Book, Genre, Category, Rating],
+      models: [Admin, User, Book, Genre, Category, Rating, Author],
       autoLoadModels: true,
       logging: false,
     }),
@@ -36,6 +38,7 @@ import { RatingModule } from './rating/rating.module';
     GenreModule,
     CategoryModule,
     RatingModule,
+    AuthorModule,
   ],
   controllers: [],
   providers: [],
