@@ -10,6 +10,8 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Admin } from '../../admin/models/admin.model';
 import { Genre } from '../../genre/models/genre.model';
+import { Category } from '../../category/models/category.model';
+import { Rating } from '../../rating/models/rating.model';
 
 interface BookAttr {
   name: string;
@@ -18,7 +20,6 @@ interface BookAttr {
   popular_age: number;
   popular_gender: string;
   category_id: number;
-  rating_id: number;
   is_paid: boolean;
   page_count: number;
   about: string;
@@ -71,19 +72,13 @@ export class Book extends Model<Book, BookAttr> {
   })
   popular_gender: string;
 
+  @ForeignKey(() => Category)
   @ApiProperty({ example: 1, description: 'Book category id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   category_id: number;
-
-  @ApiProperty({ example: 1, description: 'Book rating' })
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  rating_id: number;
 
   @ApiProperty({ example: 'false', description: 'Is it free book' })
   @Column({
@@ -130,4 +125,10 @@ export class Book extends Model<Book, BookAttr> {
 
   @BelongsTo(() => Genre)
   genre: Genre;
+
+  @BelongsTo(() => Category)
+  category: Category;
+
+  @HasMany(() => Rating)
+  ratings: Rating[];
 }

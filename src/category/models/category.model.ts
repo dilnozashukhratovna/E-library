@@ -10,13 +10,13 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Book } from '../../book/models/book.model';
 
-interface GenreAttr {
+interface CategoryAttr {
   name: string;
   description: string;
 }
 
-@Table({ tableName: 'genre' })
-export class Genre extends Model<Genre, GenreAttr> {
+@Table({ tableName: 'category' })
+export class Category extends Model<Category, CategoryAttr> {
   @ApiProperty({ example: 1, description: 'Unikal Id' })
   @Column({
     type: DataType.INTEGER,
@@ -25,7 +25,7 @@ export class Genre extends Model<Genre, GenreAttr> {
   })
   id: number;
 
-  @ApiProperty({ example: 'Fantasy', description: 'Genre name' })
+  @ApiProperty({ example: 'Bestseller', description: 'Category name' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -33,8 +33,8 @@ export class Genre extends Model<Genre, GenreAttr> {
   name: string;
 
   @ApiProperty({
-    example: 'Its based on fantasy',
-    description: 'Description to the genre',
+    example: 'Book that sells in very large numbers.',
+    description: 'Description to the category',
   })
   @Column({
     type: DataType.STRING,

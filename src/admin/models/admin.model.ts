@@ -5,8 +5,10 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Book } from '../../book/models/book.model';
 
 interface AdminAttr {
   first_name: string;
@@ -104,4 +106,9 @@ export class Admin extends Model<Admin, AdminAttr> {
     type: DataType.STRING,
   })
   activation_link: string;
+
+  //========== Relationships ================================
+  @HasMany(() => Book)
+  books: Book[];
+
 }

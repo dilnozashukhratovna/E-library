@@ -39,11 +39,6 @@ export class UpdateBookDto extends PartialType(CreateBookDto) {
   @IsInt()
   category_id?: number;
 
-  @ApiProperty({ example: 1, description: 'Book rating' })
-  @IsOptional()
-  @IsInt()
-  rating_id?: number;
-
   @ApiProperty({ example: 'false', description: 'Is it a free book' })
   @IsOptional()
   @IsBoolean()

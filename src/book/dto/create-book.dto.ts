@@ -43,11 +43,6 @@ export class CreateBookDto {
   @IsInt()
   category_id: number;
 
-  @ApiProperty({ example: 1, description: 'Book rating' })
-  @IsNotEmpty()
-  @IsInt()
-  rating_id: number;
-
   @ApiProperty({ example: 'false', description: 'Is it a free book' })
   @IsNotEmpty()
   @IsBoolean()

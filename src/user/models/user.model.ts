@@ -5,8 +5,10 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Rating } from '../../rating/models/rating.model';
 
 interface UserAttr {
   first_name: string;
@@ -46,7 +48,7 @@ export class User extends Model<User, UserAttr> {
   })
   last_name: string;
 
-  @ApiProperty({ example: "male", description: 'User gender' })
+  @ApiProperty({ example: 'male', description: 'User gender' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -110,4 +112,9 @@ export class User extends Model<User, UserAttr> {
     type: DataType.STRING,
   })
   activation_link: string;
+
+  //================== Relationships ================================
+
+  @HasMany(() => Rating)
+  ratings: Rating[];
 }
