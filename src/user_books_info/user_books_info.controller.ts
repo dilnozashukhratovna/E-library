@@ -14,6 +14,7 @@ import { UpdateUserBooksInfoDto } from './dto/update-user_books_info.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../guards/admin.guard';
 import { UserGuard } from '../guards/user.guard';
+import { UserSelfGuard } from '../guards/user.self.guard';
 
 @ApiTags('UserBooksInfo')
 @Controller('user_books_info')
@@ -40,28 +41,31 @@ export class UserBooksInfoController {
   }
 
   @ApiOperation({ summary: 'Get user_books_info by id' })
-  @UseGuards(AdminGuard)
-  @Get(':id')
-  async getUserBooksInfoById(@Param('id') id: string) {
-    return this.user_books_infoService.getUserBooksInfoById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Get('userId/:id/infoId/:infoId')
+  async getUserBooksInfoById(@Param('infoId') infoId: string) {
+    return this.user_books_infoService.getUserBooksInfoById(+infoId);
   }
 
   @ApiOperation({ summary: 'Delete user_books_info' })
-  @UseGuards(AdminGuard)
-  @Delete(':id')
-  async deleteUserBooksInfoById(@Param('id') id: string) {
-    return this.user_books_infoService.deleteUserBooksInfoById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Delete('userId/:id/infoId/:infoId')
+  async deleteUserBooksInfoById(@Param('infoId') infoId: string) {
+    return this.user_books_infoService.deleteUserBooksInfoById(+infoId);
   }
 
   @ApiOperation({ summary: 'Update user_books_info' })
-  @UseGuards(AdminGuard)
-  @Put(':id')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Put('userId/:id/infoId/:infoId')
   async updateUserBooksInfo(
-    @Param('id') id: string,
+    @Param('infoId') infoId: string,
     @Body() updateUserBooksInfoDto: UpdateUserBooksInfoDto,
   ) {
     return this.user_books_infoService.updateUserBooksInfo(
-      +id,
+      +infoId,
       updateUserBooksInfoDto,
     );
   }

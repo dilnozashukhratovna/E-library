@@ -14,6 +14,7 @@ import { UpdateUserPreferencesDto } from './dto/update-user_preferences.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../guards/admin.guard';
 import { UserGuard } from '../guards/user.guard';
+import { UserSelfGuard } from '../guards/user.self.guard';
 
 @ApiTags('UserPreferences')
 @Controller('user_preferences')
@@ -42,28 +43,31 @@ export class UserPreferencesController {
   }
 
   @ApiOperation({ summary: 'Get user_preferences by id' })
-  @UseGuards(AdminGuard)
-  @Get(':id')
-  async getUserPreferencesById(@Param('id') id: string) {
-    return this.user_preferencesService.getUserPreferencesById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Get('userId/:id/prefId/:prefId')
+  async getUserPreferencesById(@Param('prefId') prefId: string) {
+    return this.user_preferencesService.getUserPreferencesById(+prefId);
   }
 
   @ApiOperation({ summary: 'Delete user_preferences' })
-  @UseGuards(AdminGuard)
-  @Delete(':id')
-  async deleteUserPreferencesById(@Param('id') id: string) {
-    return this.user_preferencesService.deleteUserPreferencesById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Delete('userId/:id/prefId/:prefId')
+  async deleteUserPreferencesById(@Param('prefId') prefId: string) {
+    return this.user_preferencesService.deleteUserPreferencesById(+prefId);
   }
 
   @ApiOperation({ summary: 'Update user_preferences' })
-  @UseGuards(AdminGuard)
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
   @Put(':id')
   async updateUserPreferences(
-    @Param('id') id: string,
+    @Param('userId/:id/prefId/:prefId') prefId: string,
     @Body() updateUserPreferencesDto: UpdateUserPreferencesDto,
   ) {
     return this.user_preferencesService.updateUserPreferences(
-      +id,
+      +prefId,
       updateUserPreferencesDto,
     );
   }

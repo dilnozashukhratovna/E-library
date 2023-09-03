@@ -14,6 +14,7 @@ import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../guards/admin.guard';
 import { UserGuard } from '../guards/user.guard';
+import { UserSelfGuard } from '../guards/user.self.guard';
 
 @ApiTags('Payment')
 @Controller('payment')
@@ -36,26 +37,29 @@ export class PaymentController {
   }
 
   @ApiOperation({ summary: 'Get payment by id' })
-  @UseGuards(AdminGuard)
-  @Get(':id')
-  async getPaymentById(@Param('id') id: string) {
-    return this.paymentService.getPaymentById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Get('userId/:id/paymentId/:paymentId')
+  async getPaymentById(@Param('paymentId') paymentId: string) {
+    return this.paymentService.getPaymentById(+paymentId);
   }
 
   @ApiOperation({ summary: 'Delete payment' })
-  @UseGuards(AdminGuard)
-  @Delete(':id')
-  async deletePaymentById(@Param('id') id: string) {
-    return this.paymentService.deletePaymentById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Delete('userId/:id/paymentId/:paymentId')
+  async deletePaymentById(@Param('paymentId') paymentId: string) {
+    return this.paymentService.deletePaymentById(+paymentId);
   }
 
   @ApiOperation({ summary: 'Update payment' })
-  @UseGuards(AdminGuard)
-  @Put(':id')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Put('userId/:id/paymentId/:paymentId')
   async updatePayment(
-    @Param('id') id: string,
+    @Param('paymentId') paymentId: string,
     @Body() updatePaymentDto: UpdatePaymentDto,
   ) {
-    return this.paymentService.updatePayment(+id, updatePaymentDto);
+    return this.paymentService.updatePayment(+paymentId, updatePaymentDto);
   }
 }

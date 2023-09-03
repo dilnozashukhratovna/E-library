@@ -14,6 +14,7 @@ import { UpdateRatingDto } from './dto/update-rating.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../guards/admin.guard';
 import { UserGuard } from '../guards/user.guard';
+import { UserSelfGuard } from '../guards/user.self.guard';
 
 @ApiTags('Rating')
 @Controller('rating')
@@ -41,19 +42,21 @@ export class RatingController {
   }
 
   @ApiOperation({ summary: 'Delete rating' })
-  @UseGuards(AdminGuard)
-  @Delete(':id')
-  async deleteRatingById(@Param('id') id: string) {
-    return this.ratingService.deleteRatingById(+id);
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Delete('userId/:id/ratingId/:ratingId')
+  async deleteRatingById(@Param('ratingId') ratingId: string) {
+    return this.ratingService.deleteRatingById(+ratingId);
   }
 
   @ApiOperation({ summary: 'Update rating' })
-  @UseGuards(AdminGuard)
-  @Put(':id')
+  @UseGuards(UserSelfGuard)
+  @UseGuards(UserGuard)
+  @Put('userId/:id/ratingId/:ratingId')
   async updateRating(
-    @Param('id') id: string,
+    @Param('ratingId') ratingId: string,
     @Body() updateRatingDto: UpdateRatingDto,
   ) {
-    return this.ratingService.updateRating(+id, updateRatingDto);
+    return this.ratingService.updateRating(+ratingId, updateRatingDto);
   }
 }
