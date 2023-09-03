@@ -42,7 +42,7 @@ export class UserCardService {
     if (!user_card) {
       throw new NotFoundException(`UserCard with id ${id} not found.`);
     }
-    return user_card;
+    return "Successfully deleted";
   }
 
   async updateUserCard(id: number, updateUserCardDto: UpdateUserCardDto) {

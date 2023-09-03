@@ -32,6 +32,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiOperation({ summary: 'Get all users' })
+  @UseGuards(AdminGuard)
   @Get('all')
   async getAllUser() {
     return this.userService.getAllUser();
@@ -87,7 +88,7 @@ export class UserController {
     return { message: 'Password changed successfully.' };
   }
 
-  @ApiOperation({ summary: 'Change user roles' })
+  @ApiOperation({ summary: 'Change user activeness' })
   @UseGuards(AdminGuard)
   @Put(':id/activeness')
   async changeUserActiveness(

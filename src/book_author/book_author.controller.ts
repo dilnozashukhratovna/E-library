@@ -20,7 +20,7 @@ export class BookAuthorController {
   constructor(private readonly book_authorService: BookAuthorService) {}
 
   @ApiOperation({ summary: 'Create book_author' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createBookAuthor(@Body() createBookAuthorDto: CreateBookAuthorDto) {
     const book_author = this.book_authorService.createBookAuthor(createBookAuthorDto);
@@ -40,14 +40,14 @@ export class BookAuthorController {
   }
 
   @ApiOperation({ summary: 'Delete book_author' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteBookAuthorById(@Param('id') id: string) {
     return this.book_authorService.deleteBookAuthorById(+id);
   }
 
   @ApiOperation({ summary: 'Update book_author' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateBookAuthor(
     @Param('id') id: string,

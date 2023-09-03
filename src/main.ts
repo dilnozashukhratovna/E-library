@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import { errorHandler } from './helpers/error_handler';
+import logger from './services/logger';
 
 async function start() {
   try {
@@ -14,8 +16,20 @@ async function start() {
       .build();
 
     const PORT = process.env.PORT || 3003;
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, {
+      logger: ['error', 'warn', 'log'],
+    });
     app.setGlobalPrefix('api');
+
+    // LOGGER AND ERROR HANDLING
+    app.use((req, res, next) => {
+      logger.info(`Request ${req.method} ${req.url}`);
+      next();
+    });
+
+    app.use((error, req, res, next) => {
+      errorHandler(res, error);
+    });
 
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/docs', app, document);

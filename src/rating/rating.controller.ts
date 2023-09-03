@@ -13,7 +13,6 @@ import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../guards/admin.guard';
-import { UserSelfGuard } from '../guards/user.self.guard';
 import { UserGuard } from '../guards/user.guard';
 
 @ApiTags('Rating')
@@ -49,6 +48,7 @@ export class RatingController {
   }
 
   @ApiOperation({ summary: 'Update rating' })
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateRating(
     @Param('id') id: string,

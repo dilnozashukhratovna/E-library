@@ -65,6 +65,7 @@ export class AdminController {
     return this.adminService.updateAdmin(+id, updateAdminDto);
   }
 
+  // FUNCTION FOR CHANGING ADMIN PASSWORD
   @ApiOperation({ summary: 'Change admin password' })
   @Put(':id/change-password')
   @UseGuards(AdminSelfGuard)
@@ -88,6 +89,7 @@ export class AdminController {
     return { message: 'Password changed successfully.' };
   }
 
+  // FUNCTION FOR CHANGING ADMIN ROLES
   @ApiOperation({ summary: 'Change admin roles' })
   @UseGuards(CreatorGuard)
   @Put(':id/roles')

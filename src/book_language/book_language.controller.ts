@@ -20,7 +20,7 @@ export class BookLanguageController {
   constructor(private readonly book_languageService: BookLanguageService) {}
 
   @ApiOperation({ summary: 'Create book_language' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createBookLanguage(@Body() createBookLanguageDto: CreateBookLanguageDto) {
     const book_language = this.book_languageService.createBookLanguage(createBookLanguageDto);
@@ -40,14 +40,14 @@ export class BookLanguageController {
   }
 
   @ApiOperation({ summary: 'Delete book_language' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteBookLanguageById(@Param('id') id: string) {
     return this.book_languageService.deleteBookLanguageById(+id);
   }
 
   @ApiOperation({ summary: 'Update book_language' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateBookLanguage(
     @Param('id') id: string,

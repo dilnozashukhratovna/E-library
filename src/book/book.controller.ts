@@ -20,7 +20,7 @@ export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @ApiOperation({ summary: 'Create book' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createBook(@Body() createBookDto: CreateBookDto) {
     const book = this.bookService.createBook(createBookDto);
@@ -40,14 +40,14 @@ export class BookController {
   }
 
   @ApiOperation({ summary: 'Delete book' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteBookById(@Param('id') id: string) {
     return this.bookService.deleteBookById(+id);
   }
 
   @ApiOperation({ summary: 'Update book' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateBook(
     @Param('id') id: string,

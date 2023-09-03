@@ -20,7 +20,7 @@ export class LanguageController {
   constructor(private readonly languageService: LanguageService) {}
 
   @ApiOperation({ summary: 'Create language' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createLanguage(@Body() createLanguageDto: CreateLanguageDto) {
     const language = this.languageService.createLanguage(createLanguageDto);
@@ -40,14 +40,14 @@ export class LanguageController {
   }
 
   @ApiOperation({ summary: 'Delete language' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteLanguageById(@Param('id') id: string) {
     return this.languageService.deleteLanguageById(+id);
   }
 
   @ApiOperation({ summary: 'Update language' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateLanguage(
     @Param('id') id: string,

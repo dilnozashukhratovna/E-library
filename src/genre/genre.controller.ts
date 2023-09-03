@@ -20,7 +20,7 @@ export class GenreController {
   constructor(private readonly genreService: GenreService) {}
 
   @ApiOperation({ summary: 'Create genre' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createGenre(@Body() createGenreDto: CreateGenreDto) {
     const genre = this.genreService.createGenre(createGenreDto);
@@ -40,14 +40,14 @@ export class GenreController {
   }
 
   @ApiOperation({ summary: 'Delete genre' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteGenreById(@Param('id') id: string) {
     return this.genreService.deleteGenreById(+id);
   }
 
   @ApiOperation({ summary: 'Update genre' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateGenre(
     @Param('id') id: string,

@@ -20,7 +20,7 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @ApiOperation({ summary: 'Create category' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createCategory(@Body() createCategoryDto: CreateCategoryDto) {
     const category = this.categoryService.createCategory(createCategoryDto);
@@ -40,14 +40,14 @@ export class CategoryController {
   }
 
   @ApiOperation({ summary: 'Delete category' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteCategoryById(@Param('id') id: string) {
     return this.categoryService.deleteCategoryById(+id);
   }
 
   @ApiOperation({ summary: 'Update category' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateCategory(
     @Param('id') id: string,

@@ -20,7 +20,7 @@ export class PaidBooksController {
   constructor(private readonly paid_booksService: PaidBooksService) {}
 
   @ApiOperation({ summary: 'Create paid_books' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Post('create')
   async createPaidBooks(@Body() createPaidBooksDto: CreatePaidBooksDto) {
     const paid_books = this.paid_booksService.createPaidBooks(createPaidBooksDto);
@@ -40,14 +40,14 @@ export class PaidBooksController {
   }
 
   @ApiOperation({ summary: 'Delete paid_books' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deletePaidBooksById(@Param('id') id: string) {
     return this.paid_booksService.deletePaidBooksById(+id);
   }
 
   @ApiOperation({ summary: 'Update paid_books' })
-  // @UseGuards(AdminGuard)
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updatePaidBooks(
     @Param('id') id: string,
