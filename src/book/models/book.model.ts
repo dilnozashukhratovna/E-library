@@ -19,6 +19,7 @@ import { Language } from '../../language/models/language.model';
 import { BookLanguage } from '../../book_language/models/book_language.model';
 import { UserBooksInfo } from '../../user_books_info/models/user_books_info.model';
 import { Cart } from '../../cart/models/cart.model';
+import { PaidBooks } from '../../paid_books/models/paid_books.model';
 
 interface BookAttr {
   name: string;
@@ -150,4 +151,7 @@ export class Book extends Model<Book, BookAttr> {
 
   @HasMany(() => Cart)
   carts: Cart[];
+
+  @HasMany(() => PaidBooks)
+  paid_books: PaidBooks[];
 }

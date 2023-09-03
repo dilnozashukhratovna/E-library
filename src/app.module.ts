@@ -32,6 +32,8 @@ import { Payment } from './payment/models/payment.model';
 import { PaymentModule } from './payment/payment.module';
 import { Cart } from './cart/models/cart.model';
 import { CartModule } from './cart/cart.module';
+import { PaidBooks } from './paid_books/models/paid_books.model';
+import { PaidBooksModule } from './paid_books/paid_books.module';
 
 @Module({
   imports: [
@@ -59,6 +61,7 @@ import { CartModule } from './cart/cart.module';
         UserBooksInfo,
         Payment,
         Cart,
+        PaidBooks
       ],
       autoLoadModels: true,
       logging: false,
@@ -79,6 +82,7 @@ import { CartModule } from './cart/cart.module';
     UserBooksInfoModule,
     PaymentModule,
     CartModule,
+    PaidBooksModule
   ],
   controllers: [],
   providers: [],
